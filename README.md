@@ -5,3 +5,6 @@ Proyecto se basa inicialmente del blog:
 
 También se busco información acerca de plugin:
 [exec-maven-plugin](http://zetcode.com/articles/javaconsole/)
+
+Datos curioso acerca de Maven:
+[5 cosas que usted no sabía acerca de...Apache Maven](https://www.ibm.com/developerworks/ssa/library/j-5things13/index.html)
