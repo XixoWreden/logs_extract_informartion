@@ -1,17 +1,23 @@
 package com.mfsa.product.controller;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import org.apache.commons.cli.*;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.math3.stat.StatUtils;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.math3.stat.StatUtils;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 /**
  * MyStatsApp is a simple console application which computes
@@ -30,18 +36,19 @@ public class MyStatApp {
 
         CommandLine line = parseArguments(args);
         System.out.println(line.hasOption("filename"));
-//        if (line.hasOption("filename")) {
-//
-//            System.out.println(line.getOptionValue("filename"));
-//            String fileName = line.getOptionValue("filename");
-//
-//            double[] data = readData(fileName);
-//            System.out.println(data);
-////            calculateAndPrintStats(data);
-//
-//        } else {
-//            printAppHelp();
-//        }
+        if (line.hasOption("filename")) {
+
+            System.out.println(line.getOptionValue("filename"));
+            String fileName = line.getOptionValue("filename");
+
+            double[] data = readData(fileName);
+            System.out.println(data);
+//            calculateAndPrintStats(data);
+
+        } else {
+            printAppHelp();
+        }
+
     }
 
     /**
