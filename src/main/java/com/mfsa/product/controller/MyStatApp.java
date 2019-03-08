@@ -28,21 +28,21 @@ import com.opencsv.CSVReaderBuilder;
  */
 public class MyStatApp {
     /**
-     * Runs the application
+     * Etapa de interrogación, verificará
+     * si una opción en particular está presente o 
+     * NO y procesamos el comando en consecuencia.
      *
      * @param args an array of String arguments to be parsed
      */
     public void run(String[] args) {
 
         CommandLine line = parseArguments(args);
-        System.out.println(line.hasOption("filename"));
         if (line.hasOption("filename")) {
 
             System.out.println(line.getOptionValue("filename"));
             String fileName = line.getOptionValue("filename");
-
-            double[] data = readData(fileName);
-            System.out.println(data);
+//            double[] data = 	readData(fileName);
+//            System.out.println(data);
 //            calculateAndPrintStats(data);
 
         } else {
@@ -52,7 +52,7 @@ public class MyStatApp {
     }
 
     /**
-     * Parses application arguments
+     * Analiza los argumentos que se le pasen por linea de comando
      *
      * @param args
      * @return <code>CommandLine</code> which represents a list of application
@@ -62,12 +62,9 @@ public class MyStatApp {
 
         Options options = getOptions();
         CommandLine line = null;
-
         CommandLineParser parser = new DefaultParser();
-
         try {
             line = parser.parse(options, args);
-
         } catch (ParseException ex) {
 
             System.err.println(ex);
@@ -77,6 +74,29 @@ public class MyStatApp {
         }
 
         return line;
+    }
+    
+    /**
+     * Genera las opciones que usaran en la linea de comando
+     *
+     * @return application <code>Options</code>
+     */
+    private Options getOptions() {
+
+        Options options = new Options();
+        options.addOption("f", "filename", true,"file name to load data from");
+        return options;
+    }
+    
+    /**
+     * Muestra en pantalla las opciones que fueron dadas de altas
+     */
+    private void printAppHelp() {
+
+        Options options = getOptions();
+
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("MFSA Extract Logs", options, true);
     }
 
     /**
@@ -112,31 +132,6 @@ public class MyStatApp {
         }
 
         return mydata;
-    }
-
-    /**
-     * Generates application command line options
-     *
-     * @return application <code>Options</code>
-     */
-    private Options getOptions() {
-
-        Options options = new Options();
-
-        options.addOption("f", "filename", true,
-                "file name to load data from");
-        return options;
-    }
-
-    /**
-     * Prints application help
-     */
-    private void printAppHelp() {
-
-        Options options = getOptions();
-
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("JavaStatsEx", options, true);
     }
 
     /**
