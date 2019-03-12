@@ -1,5 +1,6 @@
 package com.mfsa.product.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -13,11 +14,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.stat.StatUtils;
-
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
 
 /**
  * MyStatsApp is a simple console application which computes
@@ -41,7 +38,7 @@ public class MyStatApp {
 
             System.out.println(line.getOptionValue("filename"));
             String fileName = line.getOptionValue("filename");
-//            double[] data = 	readData(fileName);
+            double[] data = 	readData(fileName);
 //            System.out.println(data);
 //            calculateAndPrintStats(data);
 
@@ -109,27 +106,47 @@ public class MyStatApp {
 
         List<Double> data = new ArrayList();
         double[] mydata = null;
-
-        try (Reader reader = Files.newBufferedReader(Paths.get(fileName));
-             CSVReader csvReader = new CSVReaderBuilder(reader).build()) {
-
-            String[] nextLine;
-
-            while ((nextLine = csvReader.readNext()) != null) {
-
-                for (String e : nextLine) {
-
-                    data.add(Double.parseDouble(e));
-                }
-            }
-
-            mydata = ArrayUtils.toPrimitive(data.toArray(new Double[data.size()]));
-
-        } catch (IOException ex) {
-
-            System.err.println(ex);
-            System.exit(1);
-        }
+        try {
+        	System.out.println(Paths.get(fileName).toString());	
+        	File file = new File(fileName);
+        	File directortyThatFile;
+        	if (file.isFile()) {
+        		directortyThatFile = file.getParentFile();
+        		if (directortyThatFile.isDirectory()) {
+        			System.out.println(directortyThatFile.getAbsoluteFile());
+				}
+        		
+			}else {
+				System.out.println("No se reconoce el archivo:"+fileName+", favor de agregar un archivo correcto");
+			}
+			Reader reader = Files.newBufferedReader(Paths.get(fileName));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+//        try (Reader reader = Files.newBufferedReader(Paths.get(fileName));
+//             
+//        		CSVReader csvReader = new CSVReaderBuilder(reader).build()) {
+//
+//            String[] nextLine;
+//
+//            while ((nextLine = csvReader.readNext()) != null) {
+//
+//                for (String e : nextLine) {
+//
+//                    data.add(Double.parseDouble(e));
+//                }
+//            }
+//
+//            mydata = ArrayUtils.toPrimitive(data.toArray(new Double[data.size()]));
+//
+//        } catch (IOException ex) {
+//
+//            System.err.println(ex);
+//            System.exit(1);
+//        }
 
         return mydata;
     }

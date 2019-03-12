@@ -49,11 +49,11 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.5.0</version>
 				<configuration>
-					<mainClass>com.mfsa.product.InitApp</mainClass>
+					<mainClass>com.mfsa.product.controller.ReadFileLineByLineController</mainClass>
 					<cleanupDaemonThreads>false</cleanupDaemonThreads>
 					<arguments>
 						<argument>-f</argument>
-						<argument>/home/janbodnar/tmp/data.csv</argument>
+						<argument>logs/mfsa_service_01.log</argument>
 					</arguments>
 				</configuration>
 			</plugin>
